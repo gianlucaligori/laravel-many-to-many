@@ -4,7 +4,8 @@ namespace Database\Seeders;
 
 use Faker\Generator as Faker;
 use App\Models\Project;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Technology;
+
 use Illuminate\Database\Seeder;
 
 class ProjectsTableSeeder extends Seeder
@@ -16,6 +17,8 @@ class ProjectsTableSeeder extends Seeder
      */
     public function run(Faker $faker)
     {
+        $technologies = Technology::all()->pluck('id')->toArray();
+
         for ($i = 0; $i < 100; $i++) {
             $project = new Project();
 
@@ -27,6 +30,8 @@ class ProjectsTableSeeder extends Seeder
             $project->surname = $faker->word();
 
             $project->save();
+
+            $project->technologies()->sync($faker->randomElements($technologies, rand(1, count($technologies))));
         }
     }
 }
