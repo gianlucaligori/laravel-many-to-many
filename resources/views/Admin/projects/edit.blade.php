@@ -1,9 +1,6 @@
 @extends('admin.layouts.base')
 
 
-
-@extends('admin.layouts.base')
-
 @section('contents')
     <div class="container">
         <h1>Edit project</h1>
@@ -41,7 +38,7 @@
             </div>
 
             <div class="mb-3">
-                <label for="technology" class="form-label">technology</label>
+                <label for="technology" class="form-label">Technology</label>
 
                 <select class="form-select @error('technology') is-invalid @enderror" aria-label="Default select example"
                     id="technology" name="technology" value="{{ old('technology') }}">
@@ -60,7 +57,7 @@
 
 
             <div class="mb-3">
-                <label for="url_image" class="form-label">date</label>
+                <label for="url_image" class="form-label">Date</label>
                 <input type="date" class="form-control @error('date') is-invalid @enderror" id="date" name="date"
                     value="{{ old('date', $project->date) }}">
                 @error('date')
@@ -73,7 +70,7 @@
 
 
             <div class="mb-3">
-                <label for="title" class="form-label">name</label>
+                <label for="title" class="form-label">Name</label>
                 <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name"
                     value="{{ old('name', $project->name) }}">
                 @error('name')
