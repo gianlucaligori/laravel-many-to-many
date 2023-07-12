@@ -13,7 +13,7 @@
             <div class="mb-3">
                 <label for="collabs" class="form-label">Collabs</label>
                 <input type="text" class="form-control @error('collabs') is-invalid @enderror" id="collabs" name="collabs"
-                    value="{{ old('collabs') }}">
+                    value="{{ old('collabs', $type->collabs) }}">
                 @error('collabs')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -21,24 +21,18 @@
                 @enderror
             </div>
 
-
             <div class="mb-3">
                 <label for="type" class="form-label">Type</label>
-
-                <select class="form-select @error('type') is-invalid @enderror" aria-label="Default select example"
-                    id="type" name="type" value="{{ old('type') }}">
-                    <option selected>Open this select Type</option>
-                    @foreach ($types as $type)
-                        <option value="{{ $type->id }}">{{ $type->type }}</option>
-                    @endforeach
-                </select>
-
+                <input type="text" class="form-control @error('collabs') is-invalid @enderror" id="type"
+                    name="type" value="{{ old('type', $type->type) }}">
                 @error('type')
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>
                 @enderror
             </div>
+
+
 
             <button class="btn btn-primary">Save</button>
 

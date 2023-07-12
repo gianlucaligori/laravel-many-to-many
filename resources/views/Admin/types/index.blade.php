@@ -27,7 +27,6 @@
 
                         <td>{{ $type->type }}</td>
                         <td>{{ $type->collabs }}</td>
-                        <td>{{ implode(', ', $type->technologies->pluck('technology')->all()) }}</td>
 
 
 
@@ -57,7 +56,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                        <form action="" data-template="{{ route('admin.types.destroy', ['project' => '*****']) }}"
+                        <form action="" data-template="{{ route('admin.types.destroy', ['type' => '*****']) }}"
                             method="post" class="d-inline-block" id="confirm-delete">
                             @csrf
                             @method('delete')

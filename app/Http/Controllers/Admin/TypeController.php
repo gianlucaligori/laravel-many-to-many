@@ -18,7 +18,7 @@ class TypeController extends Controller
 
     public function create()
     {
-        return view('admin.types.create', compact('types'));
+        return view('admin.types.create');
     }
 
 
@@ -37,13 +37,13 @@ class TypeController extends Controller
 
     public function show(Type $type)
     {
-        return view('admin.type.show', compact('type'));
+        return view('admin.types.show', compact('type'));
     }
 
 
     public function edit(Type $type)
     {
-        return view('admin.projects.edit', compact('project', 'types', 'technologies'));
+        return view('admin.types.edit', compact('type'));
     }
 
 
