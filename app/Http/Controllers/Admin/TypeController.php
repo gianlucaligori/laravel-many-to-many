@@ -10,20 +10,28 @@ class TypeController extends Controller
 {
     public function index()
     {
-        $types = Type::all();
+        $types = Type::paginate(5);
+
         return view('admin.types.index', compact('types'));
     }
 
 
     public function create()
     {
-        //
+        return view('admin.types.create', compact('types'));
     }
 
 
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+
+        $newType = new Type();
+
+        $newType->type          = $data['type'];
+        $newType->collabs          = $data['collabs'];
+        $newType->save();
+        return to_route('admin.types.show', ['type' => $newType]);
     }
 
 
@@ -35,14 +43,18 @@ class TypeController extends Controller
 
     public function edit(Type $type)
     {
-        //
+        return view('admin.projects.edit', compact('project', 'types', 'technologies'));
     }
 
 
 
     public function update(Request $request, Type $type)
     {
-        //
+        $data = $request->all();
+        $type->type         = $data['type'];
+        $type->collabs         = $data['collabs'];
+        $type->update();
+        return to_route('admin.types.show', ['type' => $type]);
     }
 
 
