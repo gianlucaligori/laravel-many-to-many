@@ -4,7 +4,7 @@
 @section('contents')
     <div class="container">
         <h1>Edit technology</h1>
-        <form method="POST" action="{{ route('admin.technologies.update', ['technology' => $technologies]) }}" novalidate>
+        <form method="POST" action="{{ route('admin.technologies.update', ['technology' => $technology]) }}" novalidate>
             @csrf
             @method('PUT')
 
