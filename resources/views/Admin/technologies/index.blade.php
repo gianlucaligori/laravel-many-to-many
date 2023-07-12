@@ -3,46 +3,32 @@
 @section('contents')
     <div class="container">
         @if (session('delete_success'))
-            @php $project = session('delete_success') @endphp
+            @php $technology = session('delete_success') @endphp
             <div class="alert alert-danger">
-                The project "{{ $project->title }}" has been deleted forever
+                The technology "{{ $technology->technology }}" has been deleted forever
             </div>
         @endif
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th scope="col">Title</th>
-                    <th scope="col">Type</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Date</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Surname</th>
-                    <th scope="col">Collabs</th>
                     <th scope="col">Techology</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($projects as $project)
+                @foreach ($technologies as $technology)
                     <tr>
-                        <th scope="row">{{ $project->title }}</th>
-                        <td>{{ $project->type->type }}</td>
-                        <td>{{ $project->description }}</td>
-                        <td>{{ $project->date }}</td>
-                        <td>{{ $project->name }}</td>
-                        <td>{{ $project->surname }}</td>
-                        <td>{{ $project->type->collabs }}</td>
-                        <td>{{ implode(', ', $project->technologies->pluck('technology')->all()) }}</td>
+                        <td>{{ implode(', ', $type->technologies->pluck('technology')->all()) }}</td>
 
 
 
                         <td>
                             <div class="d-flex justify-content-start">
                                 <a class="btn btn-primary me-2"
-                                    href="{{ route('admin.projects.show', ['project' => $project->id]) }}">View</a>
+                                    href="{{ route('admin.technologies.show', ['type' => $type->id]) }}">View</a>
                                 <a class="btn btn-warning me-2"
-                                    href="{{ route('admin.projects.edit', ['project' => $project->id]) }}">Edit</a>
+                                    href="{{ route('admin.technologies.edit', ['type' => $type->id]) }}">Edit</a>
                                 <button type="button" class="js-delete btn btn-danger" data-bs-toggle="modal"
-                                    data-bs-target="#deleteModal" data-id="{{ $project->id }}">Delete</button>
+                                    data-bs-target="#deleteModal" data-id="{{ $type->id }}">Delete</button>
                             </div>
                         </td>
                     </tr>
@@ -61,7 +47,8 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                        <form action="" data-template="{{ route('admin.projects.destroy', ['project' => '*****']) }}"
+                        <form action=""
+                            data-template="{{ route('admin.technologies.destroy', ['technology' => '*****']) }}"
                             method="post" class="d-inline-block" id="confirm-delete">
                             @csrf
                             @method('delete')
@@ -71,7 +58,8 @@
                 </div>
             </div>
         </div>
-        <a class="btn btn-warning" href="{{ route('admin.projects.create', ['project' => $project->id]) }}">New</a>
-        {{ $projects->links() }}
+        <a class="btn btn-warning" href="{{ route('admin.technologies.create', ['technology' => $technology->id]) }}">New
+            Technology/a>
+            {{ $types->links() }}
     </div>
 @endsection
