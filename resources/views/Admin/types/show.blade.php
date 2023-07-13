@@ -12,9 +12,10 @@
             </thead>
             <tbody>
                 <tr>
+
                     <td>{{ $type->type }}</td>
                     <td>{{ $type->collabs }}</td>
-                    <td>{{ implode(', ', $project->technologies->pluck('technology')->all()) }}</td>
+
                     <td>
                         <div class="d-flex justify-content-start">
                             <a class="btn btn-warning me-2"

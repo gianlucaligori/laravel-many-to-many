@@ -2,7 +2,7 @@
 
 @section('contents')
     <div class="container">
-        <h1>Add new technology</h1>
+        <h1>Add new technologies</h1>
 
 
 
@@ -11,17 +11,16 @@
 
             <div class="mb-3">
                 <label for="technology" class="form-label">Technology</label>
+                <input type="text" class="form-control @error('technology') is-invalid @enderror" id="technology"
+                    name="technology" value="{{ old('technology') }}">
+                @error('technology')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
 
-                <select class="form-select @error('technology') is-invalid @enderror" aria-label="Default select example"
-                    id="technology" name="technology" value="{{ old('technology') }}">
-                    <option selected>Open this select technology</option>
-                    @foreach ($technologies as $technology)
-                        <option value="{{ $technology->id }}">{{ $technology->technology }}</option>
-                    @endforeach
-                </select>
-
-
-                <button class="btn btn-primary">Save</button>
+            <button class="btn btn-primary">Save</button>
         </form>
     </div>
 @endsection

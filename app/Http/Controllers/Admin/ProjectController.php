@@ -3,16 +3,18 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Type;
-use App\Models\project;
+use App\Models\Project;
 use App\Models\Technology;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
 
     private $validations = [
         'title'     => 'required|string|min:5|max:100',
+        'image'        => 'image|max:200',
         'date' => 'required|date',
         'name'   => 'required|string',
         'surname'   => 'required|string',
@@ -25,7 +27,6 @@ class ProjectController extends Controller
         'max'       => 'Il campo :attribute non può superare i :max caratteri',
 
     ];
-
     public function index()
     {
         $projects = project::paginate(5);
@@ -37,6 +38,7 @@ class ProjectController extends Controller
     {
         return view('admin.projects.show', compact('project'));
     }
+
     public function create()
     {
         $types = Type::all();
@@ -50,9 +52,13 @@ class ProjectController extends Controller
 
         $data = $request->all();
 
+        $imagePath = Storage::put('uploads', $data['image']);
+
         $newProject = new Project();
 
+        $newProject->type_id        = $data['type_id'];
         $newProject->title          = $data['title'];
+        $newProject->image          = $imagePath;
         $newProject->date           = $data['date'];
         $newProject->name           = $data['name'];
         $newProject->surname        = $data['surname'];
@@ -80,13 +86,19 @@ class ProjectController extends Controller
         $project->description   = $data['description'];
         $project->update();
 
-        return to_route('admin.projects.show', ['project' => $project]);
+        $project->technologies()->sync($data['technologies'] ?? []);
+
+        return  redirect()->route('admin.projects.index', ['project' => $project]);
     }
 
     public function destroy(Project $project)
     {
+        // Rimuovi le dipendenze nella tabella project_technology
+        $project->technologies()->detach();
+
+        // Elimina il progetto
         $project->delete();
 
-        return to_route('admin.projects.index')->with('delete_success', $project);
+        return redirect()->route('admin.projects.index')->with('delete_success', $project);
     }
 }
