@@ -79,14 +79,16 @@ class ProjectController extends Controller
     {
         $data = $request->all();
 
-        if ($data['image']) {
+        if ($request->has('image')) {
 
             // Per salvare nuova immagine
             $imagePath = Storage::put('uploads', $data['image']);
 
+            if ($project->image) {
+                Storage::delete($project->image);
+            }
             // per eliminare vecchia immagine
 
-            Storage::delete($project->image);
             $project->image         = $imagePath;
         }
 

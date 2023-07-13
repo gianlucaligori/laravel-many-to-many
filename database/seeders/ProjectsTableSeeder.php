@@ -19,10 +19,10 @@ class ProjectsTableSeeder extends Seeder
     {
         $technologies = Technology::all()->pluck('id')->toArray();
 
-        for ($i = 0; $i < 100; $i++) {
+        for ($i = 0; $i < 20; $i++) {
             $project = new Project();
 
-            $project->type_id = rand(1, 100);
+            $project->type_id = rand(1, 20);
             $project->title = $faker->word();
             $project->date = $faker->dateTime();
             $project->description = $faker->paragraph();
