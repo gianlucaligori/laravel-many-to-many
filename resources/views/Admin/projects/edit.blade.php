@@ -1,6 +1,5 @@
 @extends('admin.layouts.base')
 
-
 @section('contents')
     <div class="container">
         <h1>Edit project</h1>
@@ -19,14 +18,26 @@
                 @enderror
             </div>
 
+            <div class="input-group mb-3">
+                <input type="file" class="form-control" id="image" name="image" accept="image/*">
+                <label class="input-group-text  @error('image') is-invalid @enderror" for="image">Upload</label>
+                @error('image')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+
             <div class="mb-3">
                 <label for="type" class="form-label">Type</label>
 
                 <select class="form-select @error('type') is-invalid @enderror" aria-label="Default select example"
-                    id="type" name="type" value="{{ old('type') }}">
+                    id="type" name="type" value="{{ old('type', $project->type->type) }}">
                     <option selected>Open this select Type</option>
                     @foreach ($types as $type)
-                        <option value="{{ $type->id }}">{{ $type->type }}</option>
+                        <option value="{{ $type->id }}" @if (old('type_id', $project->type->id) == $type->id) selected @endif>
+                            {{ $type->type }}
+                        </option>
                     @endforeach
                 </select>
 
@@ -40,15 +51,17 @@
             <div class="mb-3">
                 <label for="technology" class="form-label">Technology</label>
 
-                <select class="form-select @error('technology') is-invalid @enderror" aria-label="Default select example"
-                    id="technology" name="technology" value="{{ old('technology') }}">
-                    <option selected>Open this select technology</option>
-                    @foreach ($technologies as $technology)
-                        <option value="{{ $technology->id }}">{{ $technology->technology }}</option>
-                    @endforeach
-                </select>
+                @foreach ($technologies as $technology)
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="technology{{ $technology->id }}"
+                            name="technologies[]" value="{{ $technology->id }}"
+                            @if (in_array($technology->id, old('technologies', $project->technologies->pluck('id')->all()))) checked @endif>
+                        <label class="form-check-label"
+                            for="technology{{ $technology->id }}">{{ $technology->technology }}</label>
+                    </div>
+                @endforeach
 
-                @error('type')
+                @error('technology')
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>
@@ -81,7 +94,7 @@
             </div>
 
             <div class="mb-3">
-                <label for="title" class="form-label">surname</label>
+                <label for="title" class="form-label">Surname</label>
                 <input type="text" class="form-control @error('surname') is-invalid @enderror" id="surname"
                     name="surname" value="{{ old('surname', $project->surname) }}">
                 @error('surname')
