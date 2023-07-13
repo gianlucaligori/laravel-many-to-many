@@ -14,7 +14,7 @@ class ProjectController extends Controller
 
     private $validations = [
         'title'     => 'required|string|min:5|max:100',
-        'image'        => 'image|max:200',
+        'image'        => 'nullable|image|max:1024',
         'date' => 'required|date',
         'name'   => 'required|string',
         'surname'   => 'required|string',
@@ -78,6 +78,18 @@ class ProjectController extends Controller
     public function update(Request $request, Project $project)
     {
         $data = $request->all();
+
+        if ($data['image']) {
+
+            // Per salvare nuova immagine
+            $imagePath = Storage::put('uploads', $data['image']);
+
+            // per eliminare vecchia immagine
+
+            Storage::delete($project->image);
+            $project->image         = $imagePath;
+        }
+
 
         $project->title         = $data['title'];
         $project->date          = $data['date'];

@@ -3,7 +3,8 @@
 @section('contents')
     <div class="container">
         <h1>Edit project</h1>
-        <form method="POST" action="{{ route('admin.projects.update', ['project' => $project]) }}" novalidate>
+        <form method="POST" action="{{ route('admin.projects.update', ['project' => $project]) }}"
+            enctype="multipart/form-data" novalidate>
             @csrf
             @method('PUT')
 
